@@ -159,7 +159,8 @@ sb.auth.onAuthStateChange((_,s)=>{
 
 const BACK=`<a class=mut style="cursor:pointer" onclick="go('lib')">← Назад</a>`;
 const cardH=r=>`<div class=card data-id="${r.id}"><img src="${cover(r.cover_path)}" alt=""><h3>${esc(r.title)}</h3><span class=mut>${esc(r.artist)} • ${r.type=='album'?'Альбом':'Сингл'} • ${r.release_date.slice(0,4)}</span></div>`;
-const rowsHTML=(t,cv)=>t.map((x,i)=>`<div class=tr data-i=${i}><span class=mut>${i+1}</span><div class=nm>${cv?`<img src="${cover(x.cover)}" alt="">`:''}<div><div class=t>${esc(x.title)}</div><span class=mut>${esc(x.artist)}</span></div></div><span class=mut>${fmt(x.duration)}</span><button class=dots>⋯</button></div>`).join('');
+const ft=x=>x.extra_artists?.trim()?' (feat. '+x.extra_artists.trim()+')':'';
+const rowsHTML=(t,cv)=>t.map((x,i)=>`<div class=tr data-i=${i}><span class=mut>${i+1}</span><div class=nm>${cv?`<img src="${cover(x.cover)}" alt="">`:''}<div><div class=t>${esc(x.title+ft(x))}</div><span class=mut>${esc(x.artist)}</span></div></div><span class=mut>${fmt(x.duration)}</span><button class=dots>⋯</button></div>`).join('');
 function bindRows(root,t){
   root.querySelectorAll('.tr').forEach(row=>row.onclick=()=>play(t,+row.dataset.i));
   root.querySelectorAll('.dots').forEach(b=>b.onclick=e=>{
@@ -192,10 +193,15 @@ async function openRel(id){
 }
 
 async function openArtist(name){
-  const[{data:a},{data:rs},{data:t0}]=await Promise.all([
+  const tq=()=>sb.from('tracks').select('*,releases!inner(artist,cover_path)').eq('releases.artist',name);
+  const[{data:a},{data:rs},q0]=await Promise.all([
     sb.from('artists').select('*').eq('name',name).maybeSingle(),
     sb.from('releases').select('*').eq('artist',name).order('release_date',{ascending:false}),
-    sb.from('tracks').select('*,releases!inner(artist,cover_path)').eq('releases.artist',name).order('plays',{ascending:false}).limit(5)]);
+    tq().order('plays',{ascending:false}).limit(5)]);
+  const q=q0.error?await tq().limit(5):q0;
+  if(q.error)throw q.error;
+  if(!rs?.length)throw Error('Релизы артиста не найдены');
+  const t0=q.data;
   const t=t0.map(x=>({...x,artist:x.releases.artist,cover:x.releases.cover_path}));
   $('#art').innerHTML=`${BACK}<div class="hd ar" style="margin-top:14px"><img src="${cover(a?.avatar_path||rs[0].cover_path)}" alt=""><div><h3>${esc(name)}</h3><span class=mut>${rs.length} ${pl(rs.length,['релиз','релиза','релизов'])}</span></div></div>
   <button class=btn id=pa2 style="margin:22px 0">▶ Слушать</button>
@@ -221,7 +227,7 @@ async function play(list,i){
   const{data,error}=await sb.storage.from('audio').createSignedUrl(x.audio_path,7200);
   if(error)return alert('Не удалось загрузить трек');
   au.src=data.signedUrl;au.play();sb.rpc('inc_play',{tid:x.id});
-  $('#bar').classList.add('on');$('#bt').textContent=x.title;$('#ba').textContent=x.artist;
+  $('#bar').classList.add('on');$('#bt').textContent=x.title+ft(x);$('#ba').textContent=x.artist;
   $$('.tr').forEach(e=>e.classList.toggle('pl',e.dataset.i==i));
 }
 au.onended=()=>qi<queue.length-1&&play(queue,qi+1);
@@ -303,6 +309,7 @@ $('#ps').onclick=async()=>{try{
   $('#pn').value='';$('#pst').textContent='Плейлист создан ✓';loadPl();
 }catch(x){$('#pst').textContent='Ошибка: '+x.message}};
 
+addEventListener('unhandledrejection',e=>alert('Ошибка: '+(e.reason?.message||e.reason)));
 // ---------- Тема ----------
 function setTh(t){document.documentElement.dataset.theme=t;$('#th').textContent=t=='light'?'☾':'☀';try{localStorage.setItem('th',t)}catch(e){}}
 $('#th').onclick=()=>setTh(document.documentElement.dataset.theme=='light'?'dark':'light');
