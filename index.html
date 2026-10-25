@@ -128,8 +128,8 @@ function go(v){
 $$('nav a').forEach(a=>a.onclick=()=>go(a.dataset.v));
 $('#cta').onclick=()=>user?go('lib'):openLogin();
 $('#in').onclick=openLogin;$('#out').onclick=()=>sb.auth.signOut();
-$('#mod').onclick=e=>e.target.id=='mod'&&e.target.classList.remove('on');
-$('#pw').onkeydown=e=>e.key=='Enter'&&$('#lg').click();
+$('#mod').onclick=e=>{if(e.target.id=='mod')e.target.classList.remove('on')};
+$('#pw').onkeydown=e=>{if(e.key=='Enter')$('#lg').click()};
 $('#lg').onclick=async()=>{
   const{error}=await sb.auth.signInWithPassword({email:$('#em').value.trim(),password:$('#pw').value});
   if(error)$('#err').textContent='Неверный Vixen ID или пароль';
