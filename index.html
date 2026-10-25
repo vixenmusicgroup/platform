@@ -1,0 +1,244 @@
+<!doctype html>
+<html lang="ru"><head><meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>V1X3N — Vixen Music Group</title>
+<link href="https://fonts.googleapis.com/css2?family=Unbounded:wght@500;800&family=Manrope:wght@400;600;800&display=swap" rel="stylesheet">
+<style>
+:root{--bg:#000;--fg:#f5f3f4;--mut:#8b8790;--acc:#ff2e8a;--card:#0d0b0d;--ln:#221d22}
+*{box-sizing:border-box;margin:0}
+body{background:var(--bg);color:var(--fg);font:500 15px Manrope,sans-serif;min-height:100vh;padding-bottom:96px;overflow-x:hidden}
+body::before{content:"";position:fixed;inset:0;background:radial-gradient(55% 45% at 50% 28%,#3a0f2a 0,transparent 72%);pointer-events:none}
+button,input,select{font:inherit;color:inherit}
+nav{position:fixed;top:14px;left:50%;transform:translateX(-50%);z-index:20;display:flex;gap:4px;padding:5px;border:1px solid var(--ln);border-radius:99px;background:#0a080ad9;backdrop-filter:blur(14px)}
+nav a{padding:9px 18px;border-radius:99px;color:var(--mut);cursor:pointer}
+nav a.on{background:#fff;color:#000}
+.logo{position:fixed;top:26px;left:5vw;z-index:20;font:800 16px Unbounded}
+.me{position:fixed;top:14px;right:5vw;z-index:20}
+.pill{border:1px solid var(--ln);background:#0a080a;border-radius:99px;padding:10px 18px;cursor:pointer;font-weight:700}
+.btn{background:#fff;color:#000;border:0;border-radius:99px;padding:16px 34px;font-weight:800;cursor:pointer;transition:.2s}
+.btn:hover{background:var(--acc);color:#fff;box-shadow:0 10px 44px #ff2e8a77}
+section{display:none;position:relative;max-width:1100px;margin:0 auto;padding:110px 20px 40px}
+section.on{display:block}
+#home{text-align:center;padding-top:19vh}
+#home>*:not(.eq){position:relative;z-index:1}
+h1{font:800 clamp(64px,16vw,200px)/1 Unbounded;letter-spacing:-.05em;background:linear-gradient(#fff 35%,#5a3a4c);-webkit-background-clip:text;color:transparent;animation:gl 5s ease-in-out infinite}
+@keyframes gl{50%{filter:drop-shadow(0 0 50px #ff2e8a88)}}
+.sub{font-size:clamp(18px,3vw,28px);margin:22px 0 14px}
+.ty{font:500 clamp(20px,3vw,30px) Unbounded;height:1.5em}
+.ty i{display:inline-block;width:2px;height:1em;background:var(--acc);margin-left:4px;vertical-align:-3px;animation:bl 1s steps(1) infinite}
+@keyframes bl{50%{opacity:0}}
+.mut{color:var(--mut)}
+.eq{position:fixed;left:0;right:0;bottom:0;height:34vh;display:flex;align-items:flex-end;gap:5px;padding:0 2vw;opacity:.4;pointer-events:none;-webkit-mask:linear-gradient(transparent,#000);mask:linear-gradient(transparent,#000)}
+.eq b{flex:1;background:linear-gradient(var(--acc),transparent);border-radius:4px 4px 0 0;animation:eq 1s ease-in-out infinite alternate}
+@keyframes eq{from{height:6%}to{height:var(--h)}}
+h2{font:800 clamp(28px,5vw,44px) Unbounded;margin-bottom:6px}
+.grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(180px,1fr));gap:22px;margin-top:24px}
+.card{cursor:pointer}
+.card img{width:100%;aspect-ratio:1;object-fit:cover;border-radius:10px;background:#1a161a;transition:.25s}
+.card:hover img{box-shadow:0 0 0 2px var(--acc),0 14px 40px #ff2e8a44}
+.card h3{margin:10px 0 2px;font-size:16px}
+.hd{display:flex;gap:24px;align-items:flex-end;flex-wrap:wrap;padding:26px;border-radius:20px;background:linear-gradient(#7a1a4c,#14050e)}
+.hd img{width:220px;height:220px;border-radius:8px;object-fit:cover;box-shadow:0 10px 50px #000a}
+.hd h3{font:800 clamp(38px,8vw,86px)/1 Unbounded;margin:8px 0 14px;letter-spacing:-.03em}
+.tr{display:grid;grid-template-columns:36px 1fr auto 40px;align-items:center;gap:10px;padding:10px 14px;border-radius:8px;cursor:pointer;position:relative}
+.tr:hover,.tr.pl{background:#ffffff14}
+.tr.pl .t{color:var(--acc)}
+.dots{background:0;border:0;font-size:22px;cursor:pointer;color:var(--mut)}
+.pop{position:absolute;right:14px;top:80%;z-index:5;background:#1b161b;border:1px solid var(--ln);border-radius:10px;padding:12px 16px;min-width:210px;box-shadow:0 10px 30px #000a;cursor:default}
+#bar{position:fixed;bottom:0;left:0;right:0;z-index:30;display:none;grid-template-columns:1fr 2fr 1fr;gap:16px;align-items:center;padding:12px 20px;background:#080608f5;border-top:1px solid var(--ln)}
+#bar.on{display:grid}
+#sk{width:min(420px,60%);accent-color:var(--acc);vertical-align:middle}
+.mod{position:fixed;inset:0;background:#000b;backdrop-filter:blur(8px);z-index:50;display:none;place-items:center}
+.mod.on{display:grid}
+.box{background:var(--card);border:1px solid var(--ln);border-radius:20px;padding:28px;width:min(400px,92vw);display:grid;gap:12px}
+input,select{background:#070507;border:1px solid var(--ln);border-radius:10px;padding:12px;width:100%}
+input:focus,select:focus,button:focus-visible{outline:2px solid var(--acc)}
+.f{display:grid;gap:12px;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));margin:20px 0}
+.tb{border:1px solid var(--ln);border-radius:12px;padding:14px;display:grid;gap:8px;margin-top:12px}
+@media(max-width:700px){#bar{grid-template-columns:1fr}.logo{display:none}nav a{padding:8px 12px}.me{top:68px}.eq{opacity:.25}}
+@media(prefers-reduced-motion:reduce){*{animation:none!important}}
+</style></head><body>
+<div class=logo>V1X3N</div>
+<nav><a data-v=home class=on>Главная</a><a data-v=lib>Релизы</a><a data-v=admin id=na style="display:none">Админка</a></nav>
+<div class=me><button class=pill id=in>Войти</button><button class=pill id=out style="display:none">Выйти</button></div>
+
+<section id=home class=on>
+<div class=eq></div>
+<h1>V1X3N</h1>
+<p class=sub>Закрытая площадка Vixen Music Group</p>
+<p class=ty><span id=ty></span><i></i></p>
+<p class=mut style="margin:14px 0 34px">Релизы лейбла слушают только обладатели Vixen ID.</p>
+<button class=btn id=cta>Войти по Vixen ID →</button>
+<p style="margin-top:14px"><small class=mut>Без подписки · Только по приглашению</small></p>
+</section>
+
+<section id=lib><h2>Релизы</h2><div class=grid id=grid></div></section>
+<section id=rel></section>
+
+<section id=admin><h2>Новый релиз</h2>
+<div class=f>
+<select id=ty2><option value=single>Сингл</option><option value=album>Альбом</option></select>
+<input id=ti placeholder="Название релиза">
+<input id=ar placeholder="Основной артист">
+<input id=lb value="Vixen Music Group" placeholder="Лейбл">
+<input id=dd type=date>
+<label class=mut>Обложка<input id=cv type=file accept="image/*"></label>
+</div>
+<div id=tl></div>
+<button class=pill id=ad style="margin:12px 0;display:none">+ Добавить трек</button>
+<p style="margin:14px 0 30px"><button class=btn id=sv>Опубликовать</button> <span id=st class=mut></span></p>
+<h2 style="font-size:22px">Опубликовано</h2><div id=al></div>
+</section>
+
+<div id=bar>
+<div><b id=bt></b><br><span class=mut id=ba></span></div>
+<div style="text-align:center"><button class=dots id=pv>⏮</button><button class=dots id=pp style="color:#fff;font-size:28px">▶</button><button class=dots id=nx>⏭</button><br><input type=range id=sk min=0 max=1000 value=0> <span class=mut id=tm></span></div>
+<div></div></div>
+
+<div class=mod id=mod><div class=box>
+<h3>Vixen ID</h3>
+<input id=em type=email placeholder="Vixen ID (email)">
+<input id=pw type=password placeholder="Пароль">
+<span id=err style="color:var(--acc)"></span>
+<button class=btn id=lg>Войти</button></div></div>
+
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2.45.4/dist/umd/supabase.min.js"></script>
+<script>
+// ====== ВСТАВЬ СВОИ ДАННЫЕ ИЗ SUPABASE ======
+const SB_URL='https://msepoikttoedhfkdeirx.supabase.co', SB_KEY='sb_publishable_twRjigMD_wEAbINMqYCm2g_dVdKOGDM', ADMIN='adminvixen@vixen.music';
+// ============================================
+const sb=supabase.createClient(SB_URL,SB_KEY);
+const $=s=>document.querySelector(s),$$=s=>[...document.querySelectorAll(s)];
+const esc=s=>String(s??'').replace(/[&<>"']/g,c=>'&#'+c.charCodeAt(0)+';');
+const sleep=ms=>new Promise(r=>setTimeout(r,ms));
+const M=['января','февраля','марта','апреля','мая','июня','июля','августа','сентября','октября','ноября','декабря'];
+const fmt=s=>Math.floor(s/60)+':'+String(Math.floor(s%60)).padStart(2,'0');
+const dt=d=>{d=new Date(d);return d.getDate()+' '+M[d.getMonth()]+' '+d.getFullYear()+' г.'};
+const pl=n=>n%10==1&&n%100!=11?'трек':[2,3,4].includes(n%10)&&![12,13,14].includes(n%100)?'трека':'треков';
+const cover=p=>sb.storage.from('covers').getPublicUrl(p).data.publicUrl;
+const au=new Audio();let user=null,uid=null,queue=[],qi=0;
+
+function openLogin(){$('#mod').classList.add('on');$('#em').focus()}
+function show(v){$$('section').forEach(s=>s.classList.toggle('on',s.id==v));$$('nav a').forEach(a=>a.classList.toggle('on',a.dataset.v==v));scrollTo(0,0)}
+function go(v){
+  if(v!='home'&&!user)return openLogin();
+  if(v=='admin'&&user.email!=ADMIN)return;
+  show(v);if(v=='lib')loadLib();if(v=='admin')loadAdmin();
+}
+$$('nav a').forEach(a=>a.onclick=()=>go(a.dataset.v));
+$('#cta').onclick=()=>user?go('lib'):openLogin();
+$('#in').onclick=openLogin;$('#out').onclick=()=>sb.auth.signOut();
+$('#mod').onclick=e=>e.target.id=='mod'&&e.target.classList.remove('on');
+$('#pw').onkeydown=e=>e.key=='Enter'&&$('#lg').click();
+$('#lg').onclick=async()=>{
+  const{error}=await sb.auth.signInWithPassword({email:$('#em').value.trim(),password:$('#pw').value});
+  if(error)$('#err').textContent='Неверный Vixen ID или пароль';
+  else{$('#err').textContent='';$('#mod').classList.remove('on')}
+};
+sb.auth.onAuthStateChange((_,s)=>{
+  user=s?.user||null;
+  $('#out').style.display=user?'':'none';$('#in').style.display=user?'none':'';
+  $('#na').style.display=user?.email==ADMIN?'':'none';
+  if((user?.id||null)!==uid){uid=user?.id||null;
+    if(user)setTimeout(()=>go('lib'),0);
+    else{au.pause();$('#bar').classList.remove('on');show('home')}}
+});
+
+async function loadLib(){
+  const{data}=await sb.from('releases').select('*').order('release_date',{ascending:false});
+  $('#grid').innerHTML=(data||[]).map(r=>`<div class=card data-id="${r.id}"><img src="${cover(r.cover_path)}" alt=""><h3>${esc(r.title)}</h3><span class=mut>${esc(r.artist)} · ${r.type=='album'?'Альбом':'Сингл'}</span></div>`).join('')||'<p class=mut>Релизов пока нет.</p>';
+  $$('.card').forEach(c=>c.onclick=()=>openRel(c.dataset.id));
+}
+
+async function openRel(id){
+  const[{data:r},{data:t0}]=await Promise.all([sb.from('releases').select('*').eq('id',id).single(),sb.from('tracks').select('*').eq('release_id',id).order('position')]);
+  const t=t0.map(x=>({...x,artist:r.artist,cover:r.cover_path})),tot=t.reduce((a,x)=>a+x.duration,0),y=r.release_date.slice(0,4);
+  $('#rel').innerHTML=`<a class=mut style="cursor:pointer" onclick="go('lib')">← Все релизы</a><div class=hd style="margin-top:14px"><img src="${cover(r.cover_path)}" alt=""><div><span>${r.type=='album'?'Альбом':'Сингл'}</span><h3>${esc(r.title)}</h3><b>${esc(r.artist)}</b> <span class=mut>• ${y} • ${t.length} ${pl(t.length)}, ${Math.floor(tot/60)} мин. ${tot%60} сек.</span></div></div>
+  <button class=btn id=pa style="margin:22px 0">▶ Слушать</button>
+  ${t.map((x,i)=>`<div class=tr data-i=${i}><span class=mut>${i+1}</span><div><div class=t>${esc(x.title)}</div><span class=mut>${esc(r.artist)}</span></div><span class=mut>${fmt(x.duration)}</span><button class=dots>⋯</button></div>`).join('')}
+  <p class=mut style="margin-top:32px;line-height:1.7">${dt(r.release_date)}<br>© ${y} ${esc(r.label)}<br>℗ ${y} ${esc(r.label)}</p>`;
+  show('rel');
+  $('#pa').onclick=()=>play(t,0);
+  $$('.tr').forEach(row=>row.onclick=()=>play(t,+row.dataset.i));
+  $$('.dots').forEach(b=>b.onclick=e=>{
+    e.stopPropagation();const row=b.parentNode,had=row.querySelector('.pop');$$('.pop').forEach(p=>p.remove());if(had)return;
+    const p=document.createElement('div');p.className='pop';p.onclick=e=>e.stopPropagation();
+    p.innerHTML='<b>Доп. артисты</b><br><span class=mut>'+(esc(t[row.dataset.i].extra_artists)||'нет')+'</span>';row.append(p)});
+}
+document.addEventListener('click',()=>$$('.pop').forEach(p=>p.remove()));
+
+async function play(list,i){
+  queue=list;qi=i;const x=list[i];
+  const{data,error}=await sb.storage.from('audio').createSignedUrl(x.audio_path,7200);
+  if(error)return alert('Не удалось загрузить трек');
+  au.src=data.signedUrl;au.play();
+  $('#bar').classList.add('on');$('#bt').textContent=x.title;$('#ba').textContent=x.artist;
+  $$('.tr').forEach(e=>e.classList.toggle('pl',e.dataset.i==i));
+}
+au.onended=()=>qi<queue.length-1&&play(queue,qi+1);
+au.ontimeupdate=()=>{$('#sk').value=au.currentTime/(au.duration||1)*1000;$('#tm').textContent=fmt(au.currentTime)+' / '+fmt(au.duration||0)};
+au.onplay=au.onpause=()=>$('#pp').textContent=au.paused?'▶':'⏸';
+$('#sk').oninput=e=>au.currentTime=e.target.value/1000*au.duration;
+$('#pp').onclick=()=>au.paused?au.play():au.pause();
+$('#pv').onclick=()=>qi>0&&play(queue,qi-1);
+$('#nx').onclick=()=>qi<queue.length-1&&play(queue,qi+1);
+
+// ---------- Админка ----------
+function addT(){
+  const d=document.createElement('div');d.className='tb';
+  d.innerHTML='<input class=tn placeholder="Название трека"><input class=te placeholder="Доп. артисты (через запятую)"><input class=tf type=file accept=".wav,.flac,audio/wav,audio/flac">';
+  $('#tl').append(d);sync();
+}
+function sync(){
+  const a=$('#ty2').value=='album';$('#ad').style.display=a?'':'none';
+  $$('.tn').forEach(i=>i.style.display=a?'':'none');
+  if(!a)$$('.tb').slice(1).forEach(b=>b.remove());
+}
+$('#ty2').onchange=sync;$('#ad').onclick=addT;
+const dur=f=>new Promise(r=>{const a=new Audio(URL.createObjectURL(f));a.onloadedmetadata=()=>r(Math.round(a.duration));a.onerror=()=>r(0)});
+const ext=f=>f.name.split('.').pop().toLowerCase();
+
+$('#sv').onclick=async()=>{
+  try{
+    const alb=$('#ty2').value=='album',cf=$('#cv').files[0],bl=$$('.tb');
+    if(!$('#ti').value||!$('#ar').value||!$('#dd').value||!cf)throw Error('Заполни название, артиста, дату и выбери обложку');
+    const id=crypto.randomUUID(),cp=id+'.'+ext(cf);let e;
+    $('#st').textContent='Загружаю обложку…';
+    e=(await sb.storage.from('covers').upload(cp,cf)).error;if(e)throw e;
+    const rows=[];
+    for(const[i,b]of bl.entries()){
+      const f=b.querySelector('.tf').files[0];if(!f)throw Error('Выбери WAV/FLAC для трека '+(i+1));
+      if(alb&&!b.querySelector('.tn').value)throw Error('Впиши название трека '+(i+1));
+      $('#st').textContent=`Загружаю трек ${i+1} из ${bl.length}…`;
+      const ap=`${id}/${i+1}.${ext(f)}`;
+      e=(await sb.storage.from('audio').upload(ap,f)).error;if(e)throw e;
+      rows.push({release_id:id,position:i+1,title:alb?b.querySelector('.tn').value:$('#ti').value,extra_artists:b.querySelector('.te').value,audio_path:ap,duration:await dur(f)});
+    }
+    e=(await sb.from('releases').insert({id,type:$('#ty2').value,title:$('#ti').value,artist:$('#ar').value,label:$('#lb').value,release_date:$('#dd').value,cover_path:cp})).error;if(e)throw e;
+    e=(await sb.from('tracks').insert(rows)).error;if(e)throw e;
+    $('#st').textContent='Опубликовано ✓';loadAdmin();
+  }catch(x){$('#st').textContent='Ошибка: '+x.message}
+};
+
+async function loadAdmin(){
+  if(!$$('.tb').length)addT();
+  const{data}=await sb.from('releases').select('id,title,artist,cover_path').order('created_at',{ascending:false});
+  $('#al').innerHTML=(data||[]).map(r=>`<div class=tr style="grid-template-columns:1fr auto;cursor:default"><span>${esc(r.title)} — ${esc(r.artist)}</span><button class=pill data-d="${r.id}" data-c="${esc(r.cover_path)}">Удалить</button></div>`).join('')||'<p class=mut>Пока пусто.</p>';
+  $$('[data-d]').forEach(b=>b.onclick=async()=>{
+    if(!confirm('Удалить релиз насовсем?'))return;
+    const{data:t}=await sb.from('tracks').select('audio_path').eq('release_id',b.dataset.d);
+    await sb.storage.from('audio').remove(t.map(x=>x.audio_path));
+    await sb.storage.from('covers').remove([b.dataset.c]);
+    await sb.from('releases').delete().eq('id',b.dataset.d);loadAdmin();
+  });
+}
+
+// ---------- Главная: эквалайзер и печатающийся текст ----------
+$('.eq').innerHTML=Array.from({length:52},()=>`<b style="--h:${20+Math.random()*80}%;animation-delay:-${Math.random()*2}s;animation-duration:${.6+Math.random()}s"></b>`).join('');
+(async()=>{const w=['Слушай.','Чувствуй.','Только для своих.','Vixen Music Group.'];
+  for(let i=0;;i=(i+1)%w.length){
+    for(let c=1;c<=w[i].length;c++){$('#ty').textContent=w[i].slice(0,c);await sleep(90)}
+    await sleep(1400);
+    for(let c=w[i].length;c>=0;c--){$('#ty').textContent=w[i].slice(0,c);await sleep(40)}
+  }})();
+</script></body></html>
