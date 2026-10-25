@@ -4,24 +4,25 @@
 <title>V1X3N — Vixen Music Group</title>
 <link href="https://fonts.googleapis.com/css2?family=Unbounded:wght@500;800&family=Manrope:wght@400;600;800&display=swap" rel="stylesheet">
 <style>
-:root{--bg:#000;--fg:#f5f3f4;--mut:#8b8790;--acc:#ff2e8a;--card:#0d0b0d;--ln:#221d22}
+:root{--bg:#000;--fg:#f5f3f4;--mut:#8b8790;--acc:#ff2e8a;--card:#0d0b0d;--ln:#221d22;--glow:#3a0f2a;--nav:#0a080ad9;--pill:#0a080a;--btn:#fff;--btnt:#000;--h1a:#fff;--h1b:#5a3a4c;--hd1:#7a1a4c;--hd2:#14050e;--hv:#ffffff14;--bar:#080608f5;--inp:#070507;--pop:#1b161b;--ph:#1a161a;color-scheme:dark}
+[data-theme=light]{--bg:#fff;--fg:#17121a;--mut:#6f6a74;--card:#f6f2f5;--ln:#e3dce1;--glow:#ffd0e4;--nav:#ffffffd9;--pill:#fff;--btn:#17121a;--btnt:#fff;--h1a:#17121a;--h1b:#b0507c;--hd1:#ffb3d3;--hd2:#fff;--hv:#0000000d;--bar:#fffffff5;--inp:#fff;--pop:#fff;--ph:#e8e2e6;color-scheme:light}
 *{box-sizing:border-box;margin:0}
 body{background:var(--bg);color:var(--fg);font:500 15px Manrope,sans-serif;min-height:100vh;padding-bottom:96px;overflow-x:hidden}
-body::before{content:"";position:fixed;inset:0;background:radial-gradient(55% 45% at 50% 28%,#3a0f2a 0,transparent 72%);pointer-events:none}
+body::before{content:"";position:fixed;inset:0;background:radial-gradient(55% 45% at 50% 28%,var(--glow) 0,transparent 72%);pointer-events:none}
 button,input,select{font:inherit;color:inherit}
-nav{position:fixed;top:14px;left:50%;transform:translateX(-50%);z-index:20;display:flex;gap:4px;padding:5px;border:1px solid var(--ln);border-radius:99px;background:#0a080ad9;backdrop-filter:blur(14px)}
+nav{position:fixed;top:14px;left:50%;transform:translateX(-50%);z-index:20;display:flex;gap:4px;padding:5px;border:1px solid var(--ln);border-radius:99px;background:var(--nav);backdrop-filter:blur(14px)}
 nav a{padding:9px 18px;border-radius:99px;color:var(--mut);cursor:pointer}
-nav a.on{background:#fff;color:#000}
+nav a.on{background:var(--btn);color:var(--btnt)}
 .logo{position:fixed;top:26px;left:5vw;z-index:20;font:800 16px Unbounded}
-.me{position:fixed;top:14px;right:5vw;z-index:20}
-.pill{border:1px solid var(--ln);background:#0a080a;border-radius:99px;padding:10px 18px;cursor:pointer;font-weight:700}
-.btn{background:#fff;color:#000;border:0;border-radius:99px;padding:16px 34px;font-weight:800;cursor:pointer;transition:.2s}
+.me{position:fixed;top:14px;right:5vw;z-index:20;display:flex;gap:8px}
+.pill{border:1px solid var(--ln);background:var(--pill);border-radius:99px;padding:10px 18px;cursor:pointer;font-weight:700}
+.btn{background:var(--btn);color:var(--btnt);border:0;border-radius:99px;padding:16px 34px;font-weight:800;cursor:pointer;transition:.2s}
 .btn:hover{background:var(--acc);color:#fff;box-shadow:0 10px 44px #ff2e8a77}
 section{display:none;position:relative;max-width:1100px;margin:0 auto;padding:110px 20px 40px}
 section.on{display:block}
 #home{text-align:center;padding-top:19vh}
 #home>*:not(.eq){position:relative;z-index:1}
-h1{font:800 clamp(64px,16vw,200px)/1 Unbounded;letter-spacing:-.05em;background:linear-gradient(#fff 35%,#5a3a4c);-webkit-background-clip:text;color:transparent;animation:gl 5s ease-in-out infinite}
+h1{font:800 clamp(64px,16vw,200px)/1 Unbounded;letter-spacing:-.05em;background:linear-gradient(var(--h1a) 35%,var(--h1b));-webkit-background-clip:text;color:transparent;animation:gl 5s ease-in-out infinite}
 @keyframes gl{50%{filter:drop-shadow(0 0 50px #ff2e8a88)}}
 .sub{font-size:clamp(18px,3vw,28px);margin:22px 0 14px}
 .ty{font:500 clamp(20px,3vw,30px) Unbounded;height:1.5em}
@@ -34,33 +35,38 @@ h1{font:800 clamp(64px,16vw,200px)/1 Unbounded;letter-spacing:-.05em;background:
 h2{font:800 clamp(28px,5vw,44px) Unbounded;margin-bottom:6px}
 .grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(180px,1fr));gap:22px;margin-top:24px}
 .card{cursor:pointer}
-.card img{width:100%;aspect-ratio:1;object-fit:cover;border-radius:10px;background:#1a161a;transition:.25s}
+.card img{width:100%;aspect-ratio:1;object-fit:cover;border-radius:10px;background:var(--ph);transition:.25s}
 .card:hover img{box-shadow:0 0 0 2px var(--acc),0 14px 40px #ff2e8a44}
 .card h3{margin:10px 0 2px;font-size:16px}
-.hd{display:flex;gap:24px;align-items:flex-end;flex-wrap:wrap;padding:26px;border-radius:20px;background:linear-gradient(#7a1a4c,#14050e)}
+.hd{display:flex;gap:24px;align-items:flex-end;flex-wrap:wrap;padding:26px;border-radius:20px;background:linear-gradient(var(--hd1),var(--hd2))}
 .hd img{width:220px;height:220px;border-radius:8px;object-fit:cover;box-shadow:0 10px 50px #000a}
 .hd h3{font:800 clamp(38px,8vw,86px)/1 Unbounded;margin:8px 0 14px;letter-spacing:-.03em}
 .tr{display:grid;grid-template-columns:36px 1fr auto 40px;align-items:center;gap:10px;padding:10px 14px;border-radius:8px;cursor:pointer;position:relative}
-.tr:hover,.tr.pl{background:#ffffff14}
+.tr:hover,.tr.pl{background:var(--hv)}
 .tr.pl .t{color:var(--acc)}
 .dots{background:0;border:0;font-size:22px;cursor:pointer;color:var(--mut)}
-.pop{position:absolute;right:14px;top:80%;z-index:5;background:#1b161b;border:1px solid var(--ln);border-radius:10px;padding:12px 16px;min-width:210px;box-shadow:0 10px 30px #000a;cursor:default}
-#bar{position:fixed;bottom:0;left:0;right:0;z-index:30;display:none;grid-template-columns:1fr 2fr 1fr;gap:16px;align-items:center;padding:12px 20px;background:#080608f5;border-top:1px solid var(--ln)}
+.pop{position:absolute;right:14px;top:80%;z-index:5;background:var(--pop);border:1px solid var(--ln);border-radius:10px;padding:12px 16px;min-width:210px;box-shadow:0 10px 30px #000a;cursor:default}
+#bar{position:fixed;bottom:0;left:0;right:0;z-index:30;display:none;grid-template-columns:1fr 2fr 1fr;gap:16px;align-items:center;padding:12px 20px;background:var(--bar);border-top:1px solid var(--ln)}
 #bar.on{display:grid}
 #sk{width:min(420px,60%);accent-color:var(--acc);vertical-align:middle}
 .mod{position:fixed;inset:0;background:#000b;backdrop-filter:blur(8px);z-index:50;display:none;place-items:center}
 .mod.on{display:grid}
 .box{background:var(--card);border:1px solid var(--ln);border-radius:20px;padding:28px;width:min(400px,92vw);display:grid;gap:12px}
-input,select{background:#070507;border:1px solid var(--ln);border-radius:10px;padding:12px;width:100%}
+input,select{background:var(--inp);border:1px solid var(--ln);border-radius:10px;padding:12px;width:100%}
 input:focus,select:focus,button:focus-visible{outline:2px solid var(--acc)}
 .f{display:grid;gap:12px;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));margin:20px 0}
 .tb{border:1px solid var(--ln);border-radius:12px;padding:14px;display:grid;gap:8px;margin-top:12px}
+.nm{display:flex;gap:12px;align-items:center;min-width:0}.nm img{width:42px;height:42px;border-radius:4px;object-fit:cover}
+.rd .card img,.hd.ar img{border-radius:50%}.lk{cursor:pointer}.lk:hover{text-decoration:underline}.sec{font-size:22px;margin:34px 0 0}
+.chips{display:flex;gap:8px;margin:14px 0}.chip{border:0;border-radius:99px;padding:8px 14px;background:var(--hv);cursor:pointer;font-weight:700}.chip.on{background:var(--btn);color:var(--btnt)}
+.cvph{aspect-ratio:1;border-radius:10px;background:linear-gradient(135deg,var(--acc),#3a0f2a);display:grid;place-items:center;font-size:48px;color:#fff}
+.ck{display:flex;gap:10px;align-items:center;padding:6px 0}.ck input{width:auto}
 @media(max-width:700px){#bar{grid-template-columns:1fr}.logo{display:none}nav a{padding:8px 12px}.me{top:68px}.eq{opacity:.25}}
 @media(prefers-reduced-motion:reduce){*{animation:none!important}}
 </style></head><body>
 <div class=logo>V1X3N</div>
 <nav><a data-v=home class=on>Главная</a><a data-v=lib>Релизы</a><a data-v=admin id=na style="display:none">Админка</a></nav>
-<div class=me><button class=pill id=in>Войти</button><button class=pill id=out style="display:none">Выйти</button></div>
+<div class=me><button class=pill id=th title="Тема">☀</button><button class=pill id=in>Войти</button><button class=pill id=out style="display:none">Выйти</button></div>
 
 <section id=home class=on>
 <div class=eq></div>
@@ -72,8 +78,9 @@ input:focus,select:focus,button:focus-visible{outline:2px solid var(--acc)}
 <p style="margin-top:14px"><small class=mut>Без подписки · Только по приглашению</small></p>
 </section>
 
-<section id=lib><h2>Релизы</h2><div class=grid id=grid></div></section>
+<section id=lib><div id=la></div><div id=lp></div><h2 class=sec style="margin-top:0">Релизы</h2><div class=grid id=grid></div></section>
 <section id=rel></section>
+<section id=art></section>
 
 <section id=admin><h2>Новый релиз</h2>
 <div class=f>
@@ -83,16 +90,22 @@ input:focus,select:focus,button:focus-visible{outline:2px solid var(--acc)}
 <input id=lb value="Vixen Music Group" placeholder="Лейбл">
 <input id=dd type=date>
 <label class=mut>Обложка<input id=cv type=file accept="image/*"></label>
+<label class=mut>Фото артиста (необязательно)<input id=ap type=file accept="image/*"></label>
 </div>
 <div id=tl></div>
 <button class=pill id=ad style="margin:12px 0;display:none">+ Добавить трек</button>
 <p style="margin:14px 0 30px"><button class=btn id=sv>Опубликовать</button> <span id=st class=mut></span></p>
 <h2 style="font-size:22px">Опубликовано</h2><div id=al></div>
+<h2 style="margin-top:44px">Новый плейлист</h2>
+<div class=f><input id=pn placeholder="Название плейлиста"><label class=mut>Обложка (необязательно)<input id=pc type=file accept="image/*"></label></div>
+<p class=mut>Отмечай треки в нужном порядке:</p><div id=pt></div>
+<p style="margin:14px 0 30px"><button class=btn id=ps>Создать плейлист</button> <span id=pst class=mut></span></p>
+<div id=pls></div>
 </section>
 
 <div id=bar>
 <div><b id=bt></b><br><span class=mut id=ba></span></div>
-<div style="text-align:center"><button class=dots id=pv>⏮</button><button class=dots id=pp style="color:#fff;font-size:28px">▶</button><button class=dots id=nx>⏭</button><br><input type=range id=sk min=0 max=1000 value=0> <span class=mut id=tm></span></div>
+<div style="text-align:center"><button class=dots id=pv>⏮</button><button class=dots id=pp style="color:var(--fg);font-size:28px">▶</button><button class=dots id=nx>⏭</button><br><input type=range id=sk min=0 max=1000 value=0> <span class=mut id=tm></span></div>
 <div></div></div>
 
 <div class=mod id=mod><div class=box>
@@ -114,7 +127,7 @@ const sleep=ms=>new Promise(r=>setTimeout(r,ms));
 const M=['января','февраля','марта','апреля','мая','июня','июля','августа','сентября','октября','ноября','декабря'];
 const fmt=s=>Math.floor(s/60)+':'+String(Math.floor(s%60)).padStart(2,'0');
 const dt=d=>{d=new Date(d);return d.getDate()+' '+M[d.getMonth()]+' '+d.getFullYear()+' г.'};
-const pl=n=>n%10==1&&n%100!=11?'трек':[2,3,4].includes(n%10)&&![12,13,14].includes(n%100)?'трека':'треков';
+const pl=(n,w=['трек','трека','треков'])=>n%10==1&&n%100!=11?w[0]:[2,3,4].includes(n%10)&&![12,13,14].includes(n%100)?w[1]:w[2];
 const cover=p=>sb.storage.from('covers').getPublicUrl(p).data.publicUrl;
 const au=new Audio();let user=null,uid=null,queue=[],qi=0;
 
@@ -144,26 +157,62 @@ sb.auth.onAuthStateChange((_,s)=>{
     else{au.pause();$('#bar').classList.remove('on');show('home')}}
 });
 
+const BACK=`<a class=mut style="cursor:pointer" onclick="go('lib')">← Назад</a>`;
+const cardH=r=>`<div class=card data-id="${r.id}"><img src="${cover(r.cover_path)}" alt=""><h3>${esc(r.title)}</h3><span class=mut>${esc(r.artist)} • ${r.type=='album'?'Альбом':'Сингл'} • ${r.release_date.slice(0,4)}</span></div>`;
+const rowsHTML=(t,cv)=>t.map((x,i)=>`<div class=tr data-i=${i}><span class=mut>${i+1}</span><div class=nm>${cv?`<img src="${cover(x.cover)}" alt="">`:''}<div><div class=t>${esc(x.title)}</div><span class=mut>${esc(x.artist)}</span></div></div><span class=mut>${fmt(x.duration)}</span><button class=dots>⋯</button></div>`).join('');
+function bindRows(root,t){
+  root.querySelectorAll('.tr').forEach(row=>row.onclick=()=>play(t,+row.dataset.i));
+  root.querySelectorAll('.dots').forEach(b=>b.onclick=e=>{
+    e.stopPropagation();const row=b.closest('.tr'),had=row.querySelector('.pop');$$('.pop').forEach(p=>p.remove());if(had)return;
+    const p=document.createElement('div');p.className='pop';p.onclick=e=>e.stopPropagation();
+    p.innerHTML='<b>Доп. артисты</b><br><span class=mut>'+(esc(t[row.dataset.i].extra_artists)||'нет')+'</span>';row.append(p)});
+}
+const bindCards=(sel,fn,key)=>$$(sel+' .card').forEach(c=>c.onclick=()=>fn(c.dataset[key]));
+
 async function loadLib(){
-  const{data}=await sb.from('releases').select('*').order('release_date',{ascending:false});
-  $('#grid').innerHTML=(data||[]).map(r=>`<div class=card data-id="${r.id}"><img src="${cover(r.cover_path)}" alt=""><h3>${esc(r.title)}</h3><span class=mut>${esc(r.artist)} · ${r.type=='album'?'Альбом':'Сингл'}</span></div>`).join('')||'<p class=mut>Релизов пока нет.</p>';
-  $$('.card').forEach(c=>c.onclick=()=>openRel(c.dataset.id));
+  const[{data:rs},{data:as},{data:ps}]=await Promise.all([
+    sb.from('releases').select('*').order('release_date',{ascending:false}),
+    sb.from('artists').select('*'),
+    sb.from('playlists').select('*').order('created_at',{ascending:false})]);
+  const R=rs||[],av={},fb={};(as||[]).forEach(a=>av[a.name]=a.avatar_path);R.forEach(r=>fb[r.artist]??=r.cover_path);
+  const names=Object.keys(fb);
+  $('#la').innerHTML=names.length?'<h2 class=sec style="margin-top:0">Артисты</h2><div class="grid rd">'+names.map(n=>`<div class=card data-a="${esc(n)}"><img src="${cover(av[n]||fb[n])}" alt=""><h3>${esc(n)}</h3><span class=mut>Артист</span></div>`).join('')+'</div>':'';
+  $('#lp').innerHTML=(ps||[]).length?'<h2 class=sec>Плейлисты</h2><div class=grid>'+ps.map(p=>`<div class=card data-id="${p.id}">${p.cover_path?`<img src="${cover(p.cover_path)}" alt="">`:'<div class=cvph>♪</div>'}<h3>${esc(p.name)}</h3><span class=mut>Плейлист</span></div>`).join('')+'</div>':'';
+  $('#grid').innerHTML=R.map(cardH).join('')||'<p class=mut>Релизов пока нет.</p>';
+  bindCards('#la',openArtist,'a');bindCards('#lp',openPl,'id');bindCards('#grid',openRel,'id');
 }
 
 async function openRel(id){
   const[{data:r},{data:t0}]=await Promise.all([sb.from('releases').select('*').eq('id',id).single(),sb.from('tracks').select('*').eq('release_id',id).order('position')]);
   const t=t0.map(x=>({...x,artist:r.artist,cover:r.cover_path})),tot=t.reduce((a,x)=>a+x.duration,0),y=r.release_date.slice(0,4);
-  $('#rel').innerHTML=`<a class=mut style="cursor:pointer" onclick="go('lib')">← Все релизы</a><div class=hd style="margin-top:14px"><img src="${cover(r.cover_path)}" alt=""><div><span>${r.type=='album'?'Альбом':'Сингл'}</span><h3>${esc(r.title)}</h3><b>${esc(r.artist)}</b> <span class=mut>• ${y} • ${t.length} ${pl(t.length)}, ${Math.floor(tot/60)} мин. ${tot%60} сек.</span></div></div>
-  <button class=btn id=pa style="margin:22px 0">▶ Слушать</button>
-  ${t.map((x,i)=>`<div class=tr data-i=${i}><span class=mut>${i+1}</span><div><div class=t>${esc(x.title)}</div><span class=mut>${esc(r.artist)}</span></div><span class=mut>${fmt(x.duration)}</span><button class=dots>⋯</button></div>`).join('')}
+  $('#rel').innerHTML=`${BACK}<div class=hd style="margin-top:14px"><img src="${cover(r.cover_path)}" alt=""><div><span>${r.type=='album'?'Альбом':'Сингл'}</span><h3>${esc(r.title)}</h3><b class=lk id=la2>${esc(r.artist)}</b> <span class=mut>• ${y} • ${t.length} ${pl(t.length)}, ${Math.floor(tot/60)} мин. ${tot%60} сек.</span></div></div>
+  <button class=btn id=pa style="margin:22px 0">▶ Слушать</button>${rowsHTML(t)}
   <p class=mut style="margin-top:32px;line-height:1.7">${dt(r.release_date)}<br>© ${y} ${esc(r.label)}<br>℗ ${y} ${esc(r.label)}</p>`;
-  show('rel');
-  $('#pa').onclick=()=>play(t,0);
-  $$('.tr').forEach(row=>row.onclick=()=>play(t,+row.dataset.i));
-  $$('.dots').forEach(b=>b.onclick=e=>{
-    e.stopPropagation();const row=b.parentNode,had=row.querySelector('.pop');$$('.pop').forEach(p=>p.remove());if(had)return;
-    const p=document.createElement('div');p.className='pop';p.onclick=e=>e.stopPropagation();
-    p.innerHTML='<b>Доп. артисты</b><br><span class=mut>'+(esc(t[row.dataset.i].extra_artists)||'нет')+'</span>';row.append(p)});
+  show('rel');$('#pa').onclick=()=>play(t,0);$('#la2').onclick=()=>openArtist(r.artist);bindRows($('#rel'),t);
+}
+
+async function openArtist(name){
+  const[{data:a},{data:rs},{data:t0}]=await Promise.all([
+    sb.from('artists').select('*').eq('name',name).maybeSingle(),
+    sb.from('releases').select('*').eq('artist',name).order('release_date',{ascending:false}),
+    sb.from('tracks').select('*,releases!inner(artist,cover_path)').eq('releases.artist',name).order('plays',{ascending:false}).limit(5)]);
+  const t=t0.map(x=>({...x,artist:x.releases.artist,cover:x.releases.cover_path}));
+  $('#art').innerHTML=`${BACK}<div class="hd ar" style="margin-top:14px"><img src="${cover(a?.avatar_path||rs[0].cover_path)}" alt=""><div><h3>${esc(name)}</h3><span class=mut>${rs.length} ${pl(rs.length,['релиз','релиза','релизов'])}</span></div></div>
+  <button class=btn id=pa2 style="margin:22px 0">▶ Слушать</button>
+  <h2 class=sec style="margin-top:0">Популярные треки</h2><div id=pop>${rowsHTML(t,1)}</div>
+  <h2 class=sec>Музыка</h2>
+  <div class=chips><button class="chip on" data-f=all>Все релизы</button><button class=chip data-f=album>Альбомы</button><button class=chip data-f=single>Синглы</button></div><div class=grid id=rg></div>`;
+  const fill=f=>{$('#rg').innerHTML=rs.filter(r=>f=='all'||r.type==f).map(cardH).join('');bindCards('#rg',openRel,'id')};
+  fill('all');$$('.chip').forEach(c=>c.onclick=()=>{$$('.chip').forEach(x=>x.classList.toggle('on',x==c));fill(c.dataset.f)});
+  show('art');$('#pa2').onclick=()=>t.length&&play(t,0);bindRows($('#pop'),t);
+}
+
+async function openPl(id){
+  const[{data:p},{data:r}]=await Promise.all([sb.from('playlists').select('*').eq('id',id).single(),sb.from('playlist_tracks').select('position,tracks(*,releases(artist,cover_path))').eq('playlist_id',id).order('position')]);
+  const t=r.filter(x=>x.tracks).map(x=>({...x.tracks,artist:x.tracks.releases.artist,cover:x.tracks.releases.cover_path})),tot=t.reduce((a,x)=>a+x.duration,0),img=p.cover_path||t[0]?.cover;
+  $('#rel').innerHTML=`${BACK}<div class=hd style="margin-top:14px">${img?`<img src="${cover(img)}" alt="">`:'<div class=cvph style="width:220px">♪</div>'}<div><span>Плейлист</span><h3>${esc(p.name)}</h3><span class=mut>${t.length} ${pl(t.length)}, ${Math.floor(tot/60)} мин. ${tot%60} сек.</span></div></div>
+  <button class=btn id=pa style="margin:22px 0">▶ Слушать</button>${rowsHTML(t,1)}`;
+  show('rel');$('#pa').onclick=()=>t.length&&play(t,0);bindRows($('#rel'),t);
 }
 document.addEventListener('click',()=>$$('.pop').forEach(p=>p.remove()));
 
@@ -171,7 +220,7 @@ async function play(list,i){
   queue=list;qi=i;const x=list[i];
   const{data,error}=await sb.storage.from('audio').createSignedUrl(x.audio_path,7200);
   if(error)return alert('Не удалось загрузить трек');
-  au.src=data.signedUrl;au.play();
+  au.src=data.signedUrl;au.play();sb.rpc('inc_play',{tid:x.id});
   $('#bar').classList.add('on');$('#bt').textContent=x.title;$('#ba').textContent=x.artist;
   $$('.tr').forEach(e=>e.classList.toggle('pl',e.dataset.i==i));
 }
@@ -186,7 +235,7 @@ $('#nx').onclick=()=>qi<queue.length-1&&play(queue,qi+1);
 // ---------- Админка ----------
 function addT(){
   const d=document.createElement('div');d.className='tb';
-  d.innerHTML='<input class=tn placeholder="Название трека"><input class=te placeholder="Доп. артисты (через запятую)"><input class=tf type=file accept=".wav,.flac,audio/wav,audio/flac">';
+  d.innerHTML='<input class=tn placeholder="Название трека"><input class=te placeholder="Доп. артисты (через запятую)"><input class=tf type=file accept=".wav,.flac,.mp3,audio/wav,audio/flac,audio/mpeg">';
   $('#tl').append(d);sync();
 }
 function sync(){
@@ -207,21 +256,24 @@ $('#sv').onclick=async()=>{
     e=(await sb.storage.from('covers').upload(cp,cf)).error;if(e)throw e;
     const rows=[];
     for(const[i,b]of bl.entries()){
-      const f=b.querySelector('.tf').files[0];if(!f)throw Error('Выбери WAV/FLAC для трека '+(i+1));
+      const f=b.querySelector('.tf').files[0];if(!f)throw Error('Выбери WAV, FLAC или MP3 для трека '+(i+1));
       if(alb&&!b.querySelector('.tn').value)throw Error('Впиши название трека '+(i+1));
       $('#st').textContent=`Загружаю трек ${i+1} из ${bl.length}…`;
       const ap=`${id}/${i+1}.${ext(f)}`;
       e=(await sb.storage.from('audio').upload(ap,f)).error;if(e)throw e;
       rows.push({release_id:id,position:i+1,title:alb?b.querySelector('.tn').value:$('#ti').value,extra_artists:b.querySelector('.te').value,audio_path:ap,duration:await dur(f)});
     }
-    e=(await sb.from('releases').insert({id,type:$('#ty2').value,title:$('#ti').value,artist:$('#ar').value,label:$('#lb').value,release_date:$('#dd').value,cover_path:cp})).error;if(e)throw e;
+    e=(await sb.from('releases').insert({id,type:$('#ty2').value,title:$('#ti').value,artist:$('#ar').value.trim(),label:$('#lb').value,release_date:$('#dd').value,cover_path:cp})).error;if(e)throw e;
     e=(await sb.from('tracks').insert(rows)).error;if(e)throw e;
+    const af=$('#ap').files[0];
+    if(af){const ap2=`artist-${crypto.randomUUID()}.${ext(af)}`;e=(await sb.storage.from('covers').upload(ap2,af)).error;if(e)throw e;
+      e=(await sb.from('artists').upsert({name:$('#ar').value.trim(),avatar_path:ap2},{onConflict:'name'})).error;if(e)throw e}
     $('#st').textContent='Опубликовано ✓';loadAdmin();
   }catch(x){$('#st').textContent='Ошибка: '+x.message}
 };
 
 async function loadAdmin(){
-  if(!$$('.tb').length)addT();
+  if(!$$('.tb').length)addT();loadPl();
   const{data}=await sb.from('releases').select('id,title,artist,cover_path').order('created_at',{ascending:false});
   $('#al').innerHTML=(data||[]).map(r=>`<div class=tr style="grid-template-columns:1fr auto;cursor:default"><span>${esc(r.title)} — ${esc(r.artist)}</span><button class=pill data-d="${r.id}" data-c="${esc(r.cover_path)}">Удалить</button></div>`).join('')||'<p class=mut>Пока пусто.</p>';
   $$('[data-d]').forEach(b=>b.onclick=async()=>{
@@ -232,6 +284,29 @@ async function loadAdmin(){
     await sb.from('releases').delete().eq('id',b.dataset.d);loadAdmin();
   });
 }
+
+// ---------- Плейлисты (админ) ----------
+async function loadPl(){
+  const[{data:t},{data:p}]=await Promise.all([sb.from('tracks').select('id,title,releases(artist)').order('title'),sb.from('playlists').select('id,name').order('created_at',{ascending:false})]);
+  $('#pt').innerHTML=(t||[]).map(x=>`<label class=ck><input type=checkbox value="${x.id}"> ${esc(x.title)} <span class=mut>— ${esc(x.releases.artist)}</span></label>`).join('')||'<p class=mut>Сначала опубликуй релизы.</p>';
+  $('#pls').innerHTML=(p||[]).map(r=>`<div class=tr style="grid-template-columns:1fr auto;cursor:default"><span>${esc(r.name)}</span><button class=pill data-p="${r.id}">Удалить</button></div>`).join('');
+  $$('[data-p]').forEach(b=>b.onclick=async()=>{if(!confirm('Удалить плейлист?'))return;await sb.from('playlists').delete().eq('id',b.dataset.p);loadPl()});
+}
+$('#pt').onchange=e=>{e.target.dataset.o=e.target.checked?Date.now():''};
+$('#ps').onclick=async()=>{try{
+  const n=$('#pn').value.trim(),ids=$$('#pt input:checked').sort((a,b)=>a.dataset.o-b.dataset.o).map(c=>c.value),f=$('#pc').files[0];
+  if(!n||!ids.length)throw Error('Впиши название и отметь треки');
+  const id=crypto.randomUUID();let cp=null,e;
+  if(f){cp=`pl-${id}.${ext(f)}`;e=(await sb.storage.from('covers').upload(cp,f)).error;if(e)throw e}
+  e=(await sb.from('playlists').insert({id,name:n,cover_path:cp})).error;if(e)throw e;
+  e=(await sb.from('playlist_tracks').insert(ids.map((t,i)=>({playlist_id:id,track_id:t,position:i+1})))).error;if(e)throw e;
+  $('#pn').value='';$('#pst').textContent='Плейлист создан ✓';loadPl();
+}catch(x){$('#pst').textContent='Ошибка: '+x.message}};
+
+// ---------- Тема ----------
+function setTh(t){document.documentElement.dataset.theme=t;$('#th').textContent=t=='light'?'☾':'☀';try{localStorage.setItem('th',t)}catch(e){}}
+$('#th').onclick=()=>setTh(document.documentElement.dataset.theme=='light'?'dark':'light');
+setTh((()=>{try{return localStorage.getItem('th')}catch(e){}})()||'dark');
 
 // ---------- Главная: эквалайзер и печатающийся текст ----------
 $('.eq').innerHTML=Array.from({length:52},()=>`<b style="--h:${20+Math.random()*80}%;animation-delay:-${Math.random()*2}s;animation-duration:${.6+Math.random()}s"></b>`).join('');
