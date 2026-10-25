@@ -58,9 +58,11 @@ input:focus,select:focus,button:focus-visible{outline:2px solid var(--acc)}
 .tb{border:1px solid var(--ln);border-radius:12px;padding:14px;display:grid;gap:8px;margin-top:12px}
 .nm{display:flex;gap:12px;align-items:center;min-width:0}.nm img{width:42px;height:42px;border-radius:4px;object-fit:cover}
 .rd .card img,.hd.ar img{border-radius:50%}.lk{cursor:pointer}.lk:hover{text-decoration:underline}.sec{font-size:22px;margin:34px 0 0}
-.chips{display:flex;gap:8px;margin:14px 0}.chip{border:0;border-radius:99px;padding:8px 14px;background:var(--hv);cursor:pointer;font-weight:700}.chip.on{background:var(--btn);color:var(--btnt)}
+.chips{display:flex;gap:8px;margin:14px 0}.chip,.wc{border:0;border-radius:99px;padding:8px 14px;background:var(--hv);cursor:pointer;font-weight:700}.chip.on,.wc.on{background:var(--btn);color:var(--btnt)}
 .cvph{aspect-ratio:1;border-radius:10px;background:linear-gradient(135deg,var(--acc),#3a0f2a);display:grid;place-items:center;font-size:48px;color:#fff}
 .ck{display:flex;gap:10px;align-items:center;padding:6px 0}.ck input{width:auto}
+.wave{display:flex;align-items:center;justify-content:space-between;gap:20px;flex-wrap:wrap;padding:30px;border-radius:22px;background:linear-gradient(120deg,var(--hd1),var(--hd2));margin-bottom:34px}
+.wb{display:flex;gap:4px;align-items:flex-end;height:44px}.wb i{width:6px;height:20%;background:var(--acc);border-radius:3px;animation:eq 1s ease-in-out infinite alternate;animation-play-state:paused}.wave.on .wb i{animation-play-state:running}
 @media(max-width:700px){#bar{grid-template-columns:1fr}.logo{display:none}nav a{padding:8px 12px}.me{top:68px}.eq{opacity:.25}}
 @media(prefers-reduced-motion:reduce){*{animation:none!important}}
 </style></head><body>
@@ -78,7 +80,11 @@ input:focus,select:focus,button:focus-visible{outline:2px solid var(--acc)}
 <p style="margin-top:14px"><small class=mut>Без подписки · Только по приглашению</small></p>
 </section>
 
-<section id=lib><div id=la></div><div id=lp></div><h2 class=sec style="margin-top:0">Релизы</h2><div class=grid id=grid></div></section>
+<section id=lib>
+<div class=wave id=wv><div><div class=wb></div><h2 style="margin:12px 0 4px">Моя волна</h2><span class=mut>Бесконечный поток треков Vixen. Просто включи.</span>
+<div class=chips style="margin-bottom:0"><button class="wc on" data-m=all>Всё подряд</button><button class=wc data-m=new>Новинки</button><button class=wc data-m=hit>Популярное</button></div></div>
+<button class=btn id=wbtn>▶ Включить волну</button></div>
+<div id=la></div><div id=lp></div><h2 class=sec style="margin-top:0">Релизы</h2><div class=grid id=grid></div></section>
 <section id=rel></section>
 <section id=art></section>
 
@@ -129,7 +135,7 @@ const fmt=s=>Math.floor(s/60)+':'+String(Math.floor(s%60)).padStart(2,'0');
 const dt=d=>{d=new Date(d);return d.getDate()+' '+M[d.getMonth()]+' '+d.getFullYear()+' г.'};
 const pl=(n,w=['трек','трека','треков'])=>n%10==1&&n%100!=11?w[0]:[2,3,4].includes(n%10)&&![12,13,14].includes(n%100)?w[1]:w[2];
 const cover=p=>sb.storage.from('covers').getPublicUrl(p).data.publicUrl;
-const au=new Audio();let user=null,uid=null,queue=[],qi=0;
+const au=new Audio();let wave=false,wm='all',user=null,uid=null,queue=[],qi=0;
 
 function openLogin(){$('#mod').classList.add('on');$('#em').focus()}
 function show(v){$$('section').forEach(s=>s.classList.toggle('on',s.id==v));$$('nav a').forEach(a=>a.classList.toggle('on',a.dataset.v==v));scrollTo(0,0)}
@@ -154,7 +160,7 @@ sb.auth.onAuthStateChange((_,s)=>{
   $('#na').style.display=user?.email==ADMIN?'':'none';
   if((user?.id||null)!==uid){uid=user?.id||null;
     if(user)setTimeout(()=>go('lib'),0);
-    else{au.pause();$('#bar').classList.remove('on');show('home')}}
+    else{au.pause();wave=false;uiWave();$('#bar').classList.remove('on');show('home')}}
 });
 
 const BACK=`<a class=mut style="cursor:pointer" onclick="go('lib')">← Назад</a>`;
@@ -222,21 +228,21 @@ async function openPl(id){
 }
 document.addEventListener('click',()=>$$('.pop').forEach(p=>p.remove()));
 
-async function play(list,i){
-  queue=list;qi=i;const x=list[i];
+async function play(list,i,w){
+  wave=!!w;queue=list;qi=i;const x=list[i];
   const{data,error}=await sb.storage.from('audio').createSignedUrl(x.audio_path,7200);
   if(error)return alert('Не удалось загрузить трек');
   au.src=data.signedUrl;au.play();sb.rpc('inc_play',{tid:x.id});
   $('#bar').classList.add('on');$('#bt').textContent=x.title+ft(x);$('#ba').textContent=x.artist;
-  $$('.tr').forEach(e=>e.classList.toggle('pl',e.dataset.i==i));
+  $$('.tr').forEach(e=>e.classList.toggle('pl',!wave&&e.dataset.i==i));mark(x.id);uiWave();
 }
-au.onended=()=>qi<queue.length-1&&play(queue,qi+1);
+au.onended=()=>next();
 au.ontimeupdate=()=>{$('#sk').value=au.currentTime/(au.duration||1)*1000;$('#tm').textContent=fmt(au.currentTime)+' / '+fmt(au.duration||0)};
 au.onplay=au.onpause=()=>$('#pp').textContent=au.paused?'▶':'⏸';
 $('#sk').oninput=e=>au.currentTime=e.target.value/1000*au.duration;
 $('#pp').onclick=()=>au.paused?au.play():au.pause();
-$('#pv').onclick=()=>qi>0&&play(queue,qi-1);
-$('#nx').onclick=()=>qi<queue.length-1&&play(queue,qi+1);
+$('#pv').onclick=()=>{if(qi>0)play(queue,qi-1,wave)};
+$('#nx').onclick=()=>next();
 
 // ---------- Админка ----------
 function addT(){
@@ -290,6 +296,25 @@ async function loadAdmin(){
     await sb.from('releases').delete().eq('id',b.dataset.d);loadAdmin();
   });
 }
+
+// ---------- Моя волна ----------
+const rec=()=>{try{return JSON.parse(localStorage.getItem('rec')||'[]')}catch(e){return[]}};
+function mark(id){try{localStorage.setItem('rec',JSON.stringify([id,...rec().filter(x=>x!=id)].slice(0,60)))}catch(e){}}
+function uiWave(){$('#wv').classList.toggle('on',wave);$('#wbtn').textContent=wave?'⏭ Дальше':'▶ Включить волну'}
+function next(){if(qi<queue.length-1)play(queue,qi+1,wave);else if(wave)startWave()}
+async function startWave(){
+  const{data,error}=await sb.from('tracks').select('*,releases(artist,cover_path,release_date)');
+  if(error||!data?.length)return alert('Пока нет треков для волны');
+  let t=data.map(x=>({...x,artist:x.releases.artist,cover:x.releases.cover_path,d:x.releases.release_date}));
+  if(wm=='new')t=t.sort((a,b)=>b.d.localeCompare(a.d)).slice(0,20);
+  if(wm=='hit')t=t.sort((a,b)=>(b.plays||0)-(a.plays||0)).slice(0,20);
+  for(let i=t.length-1;i>0;i--){const j=Math.random()*(i+1)|0;[t[i],t[j]]=[t[j],t[i]]}
+  const r=rec();t.sort((a,b)=>r.includes(a.id)-r.includes(b.id));
+  play(t,0,true);
+}
+$('#wbtn').onclick=()=>wave?next():startWave();
+$$('.wc').forEach(c=>c.onclick=()=>{wm=c.dataset.m;$$('.wc').forEach(x=>x.classList.toggle('on',x==c));startWave()});
+$('.wb').innerHTML=[90,50,100,60,80,40,70].map((h,i)=>`<i style="--h:${h}%;animation-delay:-${i*.17}s;animation-duration:${.7+i*.08}s"></i>`).join('');
 
 // ---------- Плейлисты (админ) ----------
 async function loadPl(){
