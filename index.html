@@ -73,11 +73,12 @@ input:focus,select:focus,button:focus-visible{outline:2px solid var(--acc)}
 <section id=home class=on>
 <div class=eq></div>
 <h1>V1X3N</h1>
-<p class=sub>Закрытая площадка Vixen Music Group</p>
+<p class=sub id=hs>Закрытая площадка Vixen Music Group</p>
 <p class=ty><span id=ty></span><i></i></p>
-<p class=mut style="margin:14px 0 34px">Релизы лейбла слушают только обладатели Vixen ID.</p>
-<button class=btn id=cta>Войти по Vixen ID →</button>
-<p style="margin-top:14px"><small class=mut>Без подписки · Только по приглашению</small></p>
+<p class=mut id=hm style="margin:14px 0 34px">Релизы лейбла слушают только обладатели Vixen ID.</p>
+<button class=btn id=cta>Войти по Vixen ID →</button> <button class=pill id=cta2 style="display:none;padding:16px 28px">Все релизы</button>
+<p style="margin-top:14px"><small class=mut id=hn>Без подписки · Только по приглашению</small></p>
+<div id=hw style="display:none;text-align:left;margin-top:56px"><h2 class=sec style="margin-top:0">Свежие релизы</h2><div class=grid id=hnew></div></div>
 </section>
 
 <section id=lib>
@@ -145,7 +146,8 @@ function go(v){
   show(v);if(v=='lib')loadLib();if(v=='admin')loadAdmin();
 }
 $$('nav a').forEach(a=>a.onclick=()=>go(a.dataset.v));
-$('#cta').onclick=()=>user?go('lib'):openLogin();
+$('#cta').onclick=()=>{if(!user)openLogin();else if(wave)next();else startWave()};
+$('#cta2').onclick=()=>go('lib');
 $('#in').onclick=openLogin;$('#out').onclick=()=>sb.auth.signOut();
 $('#mod').onclick=e=>{if(e.target.id=='mod')e.target.classList.remove('on')};
 $('#pw').onkeydown=e=>{if(e.key=='Enter')$('#lg').click()};
@@ -157,9 +159,9 @@ $('#lg').onclick=async()=>{
 sb.auth.onAuthStateChange((_,s)=>{
   user=s?.user||null;
   $('#out').style.display=user?'':'none';$('#in').style.display=user?'none':'';
-  $('#na').style.display=user?.email==ADMIN?'':'none';
+  $('#na').style.display=user?.email==ADMIN?'':'none';homeUI();
   if((user?.id||null)!==uid){uid=user?.id||null;
-    if(user)setTimeout(()=>go('lib'),0);
+    if(user)show('home');
     else{au.pause();wave=false;uiWave();$('#bar').classList.remove('on');show('home')}}
 });
 
@@ -297,10 +299,25 @@ async function loadAdmin(){
   });
 }
 
+// ---------- Главная после входа ----------
+async function homeUI(){
+  const on=!!user;
+  $('#hs').textContent=on?'С возвращением, '+user.email.split('@')[0]:'Закрытая площадка Vixen Music Group';
+  $('#hm').textContent=on?'Включи свою волну или выбери свежий релиз.':'Релизы лейбла слушают только обладатели Vixen ID.';
+  $('#cta').textContent=on?(wave?'⏭ Дальше':'▶ Включить мою волну'):'Войти по Vixen ID →';
+  $('#cta2').style.display=on?'':'none';
+  $('#hn').textContent=on?'Ты вошёл как '+user.email:'Без подписки · Только по приглашению';
+  $('#hw').style.display=on?'':'none';
+  if(!on)return;
+  const{data}=await sb.from('releases').select('*').order('release_date',{ascending:false}).limit(6);
+  $('#hnew').innerHTML=(data||[]).map(cardH).join('')||'<p class=mut>Релизов пока нет.</p>';
+  bindCards('#hnew',openRel,'id');
+}
+
 // ---------- Моя волна ----------
 const rec=()=>{try{return JSON.parse(localStorage.getItem('rec')||'[]')}catch(e){return[]}};
 function mark(id){try{localStorage.setItem('rec',JSON.stringify([id,...rec().filter(x=>x!=id)].slice(0,60)))}catch(e){}}
-function uiWave(){$('#wv').classList.toggle('on',wave);$('#wbtn').textContent=wave?'⏭ Дальше':'▶ Включить волну'}
+function uiWave(){$('#wv').classList.toggle('on',wave);$('#wbtn').textContent=wave?'⏭ Дальше':'▶ Включить волну';if(user)$('#cta').textContent=wave?'⏭ Дальше':'▶ Включить мою волну'}
 function next(){if(qi<queue.length-1)play(queue,qi+1,wave);else if(wave)startWave()}
 async function startWave(){
   const{data,error}=await sb.from('tracks').select('*,releases(artist,cover_path,release_date)');
